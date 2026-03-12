@@ -24,6 +24,7 @@ function ServiceCard({ Icon, title, description, index }) {
         className="mt-6 bg-primary hover:bg-primary/80 text-white px-6 py-2 text-xs font-bold uppercase tracking-widest transition-colors"
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
+        onClick={() => window.location.href = '/services'}
       >
         Learn More
       </motion.button>
