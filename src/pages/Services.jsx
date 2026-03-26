@@ -62,9 +62,7 @@ export default function Services() {
       title: "Video Editing Training",
       description: "Master professional video editing with industry-standard tools and techniques.",
       features: [
-        "Premiere Pro & DaVinci Resolve mastery",
-        "Advanced color grading techniques",
-        "Motion graphics and effects",
+        "CapCut(pro) mastery",
         "Real-world project workflows",
         "Portfolio building assistance",
       ],
