@@ -4,7 +4,7 @@ import { useState } from 'react'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 
-function GalleryImage({ image, title, category, index }) {
+function GalleryImage({ image, category, index }) {
   const [isHovered, setIsHovered] = useState(false)
 
   return (
@@ -19,7 +19,7 @@ function GalleryImage({ image, title, category, index }) {
       whileHover={{ scale: 1.05 }}
     >
       <img
-        alt={title}
+        alt="Gallery item"
         className="w-full h-full object-cover"
         src={image}
       />
@@ -29,7 +29,6 @@ function GalleryImage({ image, title, category, index }) {
         animate={{ opacity: isHovered ? 1 : 0 }}
         transition={{ duration: 0.3 }}
       >
-        <h3 className="text-white font-bold uppercase text-lg tracking-wide mb-2">{title}</h3>
         <span className="bg-primary text-white px-4 py-1 text-xs uppercase font-semibold tracking-widest">
           {category}
         </span>
@@ -42,61 +41,31 @@ export default function Gallery() {
   const [activeCategory, setActiveCategory] = useState('all')
 
   const galleryItems = [
-    {
-      id: 1,
-      image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCaAwDjctdxbZaeGTGlHbrsb_2oQkZyZlx1_Z_ValkRVPO93GULDBGQoJsgxP2sgs61ZCXWITZBSattKnsN0vYIpW8ZhxHYOAAU6GEPhcHXm99-Lv3b7wppROdUt4tBs5m_SpBhe55qAewjzvKqCImlCQUQ1ky6BA8N3urHOc5rFKl8GNXuEgW4ZUzrLLTh3ZLv6LUtS3LKMhL2FJ9jjgDVcFsN1b3yOg6eTnAMZTDz7AaGEW58juTEHx5U94mrRTr7Xq9Mbd46az_a',
-      title: 'Cinematic Montage',
-      category: 'video-editing',
-    },
-    {
-      id: 2,
-      image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuC4OskEwu8rFZsQYmUHt1Q-Re196D1GMQWdh_ei8Hsc5ht-10p7LQsVCQdjfyPi9BIwNfTLseqX2fRbGqC-fRRZ7WmhOJEbfxxbCh5KLhjlf4WBmPsHG1BPdY8jCHgfFj3wovAmvAQlqyArNHb56uowifptrdhHaB1uUMEoGvP-P5gc3FjCnTlVwnj-ej6WcFaZc1sErZOaD4Kyv1k26Mmak3dWKTh4ob79DuBlHAm1xWnN5k0CEkmZmvToBdi4he3hxUQz97lpCsTf',
-      title: 'Product Photography',
-      category: 'photography',
-    },
-    {
-      id: 3,
-      image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuD4lIzLpRN_2W-ydVtSqYN_M54pEb8uBmhQaZ11B6AhCx0EKDXy0lFCQPa097ZiiCxqj9v1UxpkfyOPmckZQlOs5HFQkl1iWAP9Yx-EhpY0fcsHK0XrpuPOF2Ln22Nhej5fUnWSMOs7au_kQSF5ZZK0JtoMfdwcafRJ157oDx3zigeluP7rw3pusiMXLIsO_kZTXQI1o5-rB3Uw3NGVQUMG1CJEA0bhYFeoK3-ZSWBcj4msphuz6uAl25EbnDpJBImZH1_4VNrG8q45',
-      title: 'Motion Graphics Design',
-      category: 'video-editing',
-    },
-    {
-      id: 4,
-      image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAgWIC7_DPi3u0oRQ-NPMa6sil_3TMLyZFxJ7oVBqoXjZBpjrsu2Qg9CfSUxe_n8lnLDuH10bsTan9Z0xzDfGZ5aIGeIg00EU6Ur5VY_VTmU5r5D3kq7Cn1PtVIMM7xOi1MC4WoQ7Qs8pybdxlGnW8Lhr5kr4SUJTAKjVRS5C7QWT6gCIFReOH1bF9FxvX_LUhim8Ijvll1nJEoHDs4I9oqP2SODyxZqcg8eBLuJ53ulBMIeVqMI919354sMQQ_ZL3Skd4jtWSEvEYC',
-      title: 'Film Production',
-      category: 'filmmaking',
-    },
-    {
-      id: 5,
-      image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBo1niMkbmAaoiSqt_FoyRzelEH8rGdZwVTtUanfelOb193QitR-agdqKG9lsPQV2yItVKbX_RmwPpb1ZH714s1S3-8YaMOjOPZlIaNGiVHk-hsL1H10e3jjEruHDbWP2rKtCWAZQxvyYKUXithUVYkcU1aUcHHxuyk3iplEqUKtSf4Ni5BcpChKtdPcZvsp1UcrXTV7S_ivHxDgJ01-R7lIKxu0yXU8i0ERSrlZPXiIpUjucCmD8-UfWv69Uy0NSPK3aSzu0DB7VOj',
-      title: 'Portrait Photography',
-      category: 'photography',
-    },
-    {
-      id: 6,
-      image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDD-65YvWu5HOFu3tOf3YcLFv0JK42ye2GnTkfX2kgTeeADa39cJuudB49cQ39K4GbUFJ8mgOja6SHysdGg3hJyYGr-_Xppu8_1YFDNJhgVeJ4KjXzsW-039yRrhhdno2LtscUoxNaLZvLD2CQGGMs98hxkTG4C_XBZn0efcJWlunci7Sej2cTFupAi8Q4oaiV5abtGlhHygdIf6dKP-3IpzhsEr75ArJt8Gmm9Hutwa47mxQmEy3I2amDt-0i3YRMdfrqC0JIQ1Y9Y',
-      title: 'Podcast Studio',
-      category: 'podcast',
-    },
-    {
-      id: 7,
-      image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAgeh9QX0h8S-SBSUJ4gG5CaWfbpSxvX9oKtHdgx1DwKuNrD6BxKXq_3CdZgxP3lcfV6ALZ3gdRKaoxy23rqc--FOk2dEQVgA1qdCe05MdZW1B09WBJ9LuAryDo_gN1MXGE5oKJ9PmC3QXvjZxZ_3ahQq8CkWKFZtIzGl09gJrCFheqmDWJ8zcqFN2f8HAekJgLbBTZYmfAr5DJarnJ1XtL7N0MQpLRW3XE5VTHFghs3VDa_pxKdEgaxZAaTwjyjFSOq_anvvixFgRV',
-      title: 'Content Creation Setup',
-      category: 'studio-setup',
-    },
-    {
-      id: 8,
-      image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDjzAh3JORnxVa8FNXGytOwEAx_cThJEVrfjSOBe0Tg88tKH0c1zkR9w5mUcXKJvxWiJEW-7tbGNMRBbk_HpIgdx9yfodf5U1whuaHE4RJLqrYIVrZj0Lv4C-3iCHDqPrm5mCw7An3sfHA1mgnekeqQ_gKkhhbXDgB0OLDElsJ-PHaS5BBwgJr72J6YkNLian4AzPqJl6j-1wyVGbYBHJb7BKcbNkEWfuZKcKAT3o0VgIcICx1sB-zXdyv41AoECHZDqxVRqPkJMzHW',
-      title: 'Color Grading Showcase',
-      category: 'video-editing',
-    },
+    { id: 1, image: '/IMG-20260228-WA0012.jpg.jpeg', category: 'photography' },
+    { id: 2, image: '/IMG-20260228-WA0015.jpg.jpeg', category: 'photography' },
+    { id: 3, image: '/IMG-20260228-WA0017.jpg.jpeg', category: 'photography' },
+    { id: 5, image: '/TBM_831.jpeg', category: 'photography' },
+    { id: 6, image: '/TBM_832.jpeg', category: 'photography' },
+    { id: 7, image: '/TBM_833.jpeg', category: 'photography' },
+    { id: 8, image: '/TBM_834.jpeg', category: 'photography' },
+    { id: 9, image: '/TBM_835.jpeg', category: 'photography' },
+    { id: 10, image: '/TBM_836.jpeg', category: 'photography' },
+    { id: 11, image: '/TBM_837.jpeg', category: 'photography' },
+    { id: 13, image: '/Untitled-03.jpg.jpeg', category: 'photography' },
+    { id: 14, image: '/Untitled-05.jpg.jpeg', category: 'photography' },
+    { id: 15, image: '/Untitled-06.jpg.jpeg', category: 'photography' },
+    { id: 16, image: '/Untitled-09.jpg.jpeg', category: 'photography' },
+    { id: 17, image: '/Untitled-10.jpg.jpeg', category: 'photography' },
+    { id: 18, image: '/Untitled-13.jpg.jpeg', category: 'photography' },
+    { id: 19, image: '/Untitled-14.jpg.jpeg', category: 'photography' },
+    { id: 20, image: '/Untitled-15.jpg.jpeg', category: 'photography' },
+    { id: 22, image: '/Untitled-16.jpg.jpeg', category: 'photography' },
+    { id: 23, image: '/Untitled-01.jpg.jpeg', category: 'photography' },
   ]
 
   const categories = [
     { id: 'all', label: 'All Works' },
-    { id: 'video-editing', label: 'Video Editing' },
     { id: 'photography', label: 'Photography' },
-    { id: 'filmmaking', label: 'Film Making' },
     { id: 'podcast', label: 'Podcast' },
     { id: 'studio-setup', label: 'Studio Setup' },
   ]
@@ -201,7 +170,6 @@ export default function Gallery() {
                 <GalleryImage
                   key={item.id}
                   image={item.image}
-                  title={item.title}
                   category={item.category}
                   index={index}
                 />

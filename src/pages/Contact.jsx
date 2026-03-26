@@ -3,6 +3,7 @@ import { motion } from 'framer-motion'
 import { FaEnvelope, FaPhone, FaMapMarkerAlt, FaInstagram, FaYoutube, FaTiktok, FaCheckCircle, FaWhatsapp } from 'react-icons/fa'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
+import { saveQuoteRequest } from '../services/firebaseService'
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -19,21 +20,29 @@ export default function Contact() {
     setFormData((prev) => ({ ...prev, [name]: value }))
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    // Here you would typically send the form data to an email service
-    setSubmitted(true)
-    // Reset form after 3 seconds
-    setTimeout(() => {
-      setFormData({
-        fullName: '',
-        email: '',
-        phone: '',
-        serviceType: '',
-        message: '',
-      })
-      setSubmitted(false)
-    }, 3000)
+    
+    // Save to Firebase
+    const result = await saveQuoteRequest(formData)
+    
+    if (result.success) {
+      setSubmitted(true)
+      // Reset form after 3 seconds
+      setTimeout(() => {
+        setFormData({
+          fullName: '',
+          email: '',
+          phone: '',
+          serviceType: '',
+          message: '',
+        })
+        setSubmitted(false)
+      }, 3000)
+    } else {
+      alert('Error submitting form. Please try again.')
+      console.error(result.error)
+    }
   }
 
   const containerVariants = {

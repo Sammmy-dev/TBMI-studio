@@ -36,7 +36,7 @@ const services = [
   {
     Icon: Video,
     title: "Video Editing Training",
-    description: "Master professional video editing with Premiere Pro, DaVinci Resolve, and After Effects. From basics to advanced techniques.",
+    description: "Master professional video editing with Professional Software (Premiere Pro, CapCut Pro etc.), From basics to advanced techniques.",
     category: "training",
   },
   {

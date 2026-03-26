@@ -27,7 +27,7 @@ export default function Hero() {
       <motion.div
         className="absolute inset-0 z-0 opacity-40"
         style={{
-          backgroundImage: `url('https://lh3.googleusercontent.com/aida-public/AB6AXuAgWIC7_DPi3u0oRQ-NPMa6sil_3TMLyZFxJ7oVBqoXjZBpjrsu2Qg9CfSUxe_n8lnLDuH10bsTan9Z0xzDfGZ5aIGeIg00EU6Ur5VY_VTmU5r5D3kq7Cn1PtVIMM7xOi1MC4WoQ7Qs8pybdxlGnW8Lhr5kr4SUJTAKjVRS5C7QWT6gCIFReOH1bF9FxvX_LUhim8Ijvll1nJEoHDs4I9oqP2SODyxZqcg8eBLuJ53ulBMIeVqMI919354sMQQ_ZL3Skd4jtWSEvEYC')`,
+          backgroundImage: `url('https://images.unsplash.com/photo-1554941829-202a0b2403b8?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')`,
           backgroundSize: "cover",
         }}
         initial={{ scale: 1.1, opacity: 0 }}

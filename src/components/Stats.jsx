@@ -32,9 +32,9 @@ function StatCard({ number, label, index }) {
 }
 
 const stats = [
-  { number: "2000+", label: "Creators Trained" },
-  { number: "500+", label: "Projects Completed" },
-  { number: "50+", label: "Brands Served" },
+  { number: "1600+", label: "Creators Trained" },
+  { number: "200+", label: "Projects Completed" },
+  { number: "70+", label: "Brands Served" },
   { number: "10", label: "Services Offered" },
 ]
 

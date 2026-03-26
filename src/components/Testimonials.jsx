@@ -63,24 +63,27 @@ function TestimonialCard({ quote, author, role, image, index }) {
 
 const testimonials = [
   {
-    quote: "TBMI Studios helped us launch our YouTube channel with professional production quality. Their content creation service is absolutely game-changing.",
+    quote:
+      "TBMI Studios helped us launch our YouTube channel with professional production quality. Their content creation service is absolutely game-changing.",
     author: "Sarah Jenkins",
     role: "Content Creator & YouTuber",
-    image: "https://lh3.googleusercontent.com/aida-public/AB6AXuAga1EXkMnNlXAaQQHeIskpVFe9QhoAH6EnAH4X0D3JUqvf1e7VsCXQX_BKsyKMsBaEKWaVWcuNso-IAtBv2Ytq-803P7Oduerz7uq4PEVGl7MmO0RAT6GUufPytLWi-ZmDRlDrtmscxJIp4-FC0vMRGkHZNS_2Ag9rzqWoyADWqU6xrHXMqPDHSX2tZLXVD43X9NHTREyBRzk9SSQqcUY1SkJFuLaRPKhrm4fFQBxKob4E9EI3bb7cth4GV2laq3r2ESh8DmW83XUd",
+    image: "/Untitled-17.jpg.jpeg",
   },
   {
-    quote: "Their studio setup consultation was invaluable. They helped us build a professional podcast studio from scratch, and the results speak for themselves.",
+    quote:
+      "Their studio setup consultation was invaluable. They helped us build a professional podcast studio from scratch, and the results speak for themselves.",
     author: "David Chen",
     role: "Podcast Producer",
-    image: "https://lh3.googleusercontent.com/aida-public/AB6AXuDjzAh3JORnxVa8FNXGytOwEAx_cThJEVrfjSOBe0Tg88tKH0c1zkR9w5mUcXKJvxWiJEW-7tbGNMRBbk_HpIgdx9yfodf5U1whuaHE4RJLqrYIVrZj0Lv4C-3iCHDqPrm5mCw7An3sfHA1mgnekeqQ_gKkhhbXDgB0OLDElsJ-PHaS5BBwgJr72J6YkNLian4AzPqJl6j-1wyVGbYBHJb7BKcbNkEWfuZKcKAT3o0VgIcICx1sB-zXdyv41AoECHZDqxVRqPkJMzHW",
+    image: "/Untitled-18.jpg.jpeg",
   },
   {
-    quote: "Their photography training combined with their professional photo shoot service made our product launch perfect. Highly recommended!",
+    quote:
+      "Their photography training combined with their professional photo shoot service made our product launch perfect. Highly recommended!",
     author: "Marcus Reed",
     role: "E-commerce Brand Owner",
-    image: "https://lh3.googleusercontent.com/aida-public/AB6AXuB6Sitnr2fVDoGb0mLFfDzKJXiaFsEpo1vJ9ATAa4jk6Ytp6TiSZWbKemhyU2yZS26YdOC8MB2s3L6-QK6n8u02HDeN5RuDCehPF-zAwQKmxFWML6RggBHFHErUQONAOWsCLXOQ4vZnWO1hFLJbBXZ6yupMv1ITGwkh1lYVDQbx6b8iD7xcjm6r1nQ-Qyqx0Wmnc8-Xpwv-kv9i0XSAh_YbFJp72ITHDByCHccMmWmQoGWtIEjlWiam7HbXKqYmjDI0tEdUgztnCXEh",
+    image: "/Untitled-19.jpg.jpeg",
   },
-]
+];
 
 export default function Testimonials() {
   return (

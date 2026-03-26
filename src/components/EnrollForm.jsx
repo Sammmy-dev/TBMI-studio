@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { CheckCircle, X } from 'lucide-react'
+import { saveEnrollment } from '../services/firebaseService'
 
 export default function EnrollForm() {
   const [formData, setFormData] = useState({
@@ -39,9 +40,18 @@ export default function EnrollForm() {
     setImagePreview(null)
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    setSubmitted(true)
+    
+    // Save to Firebase
+    const result = await saveEnrollment(formData)
+    
+    if (result.success) {
+      setSubmitted(true)
+    } else {
+      alert('Error submitting form. Please try again.')
+      console.error(result.error)
+    }
   }
 
   const containerVariants = {
