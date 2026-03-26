@@ -65,21 +65,21 @@ const testimonials = [
   {
     quote:
       "TBMI Studios helped us launch our YouTube channel with professional production quality. Their content creation service is absolutely game-changing.",
-    author: "Sarah Jenkins",
+    author: "Sarah Johnson",
     role: "Content Creator & YouTuber",
     image: "/Untitled-17.jpg.jpeg",
   },
   {
     quote:
       "Their studio setup consultation was invaluable. They helped us build a professional podcast studio from scratch, and the results speak for themselves.",
-    author: "David Chen",
+    author: "Grace Okafor",
     role: "Podcast Producer",
     image: "/Untitled-18.jpg.jpeg",
   },
   {
     quote:
       "Their photography training combined with their professional photo shoot service made our product launch perfect. Highly recommended!",
-    author: "Marcus Reed",
+    author: "Oluwatosin Adeyemi",
     role: "E-commerce Brand Owner",
     image: "/Untitled-19.jpg.jpeg",
   },

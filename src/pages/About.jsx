@@ -245,7 +245,7 @@ export default function About() {
         </section>
 
         {/* Team Section */}
-        <section className="py-32 bg-surface">
+        {/* <section className="py-32 bg-surface">
           <div className="max-w-6xl mx-auto px-6">
             <motion.div
               className="mb-20 text-center"
@@ -271,7 +271,7 @@ export default function About() {
               ))}
             </div>
           </div>
-        </section>
+        </section> */}
 
         {/* CTA Section */}
         <section className="py-32 bg-gradient-to-r from-primary/10 to-primary/5 border-y border-primary/20">
