@@ -1,0 +1,1 @@
+I am using WSL2 (Ubuntu) on Windows. Always generate Linux/bash commands with Unix-style paths (/mnt/c/... or relative paths). Never use Windows CMD commands like del, md, rd, copy, or backslash paths (C:\...). Always use forward slashes and Linux commands like rm, mkdir, cp, etc. when providing instructions or code snippets.
