@@ -13,7 +13,8 @@ const enrollmentSchema = new mongoose.Schema(
     paymentReceiptFileName: String,
     paymentReceiptSize: Number,
     paymentReceiptType: String,
-    paymentReceiptPath: String,
+    paymentReceiptUrl: String,
+    paymentReceiptPublicId: String,
   },
   { timestamps: true }
 )

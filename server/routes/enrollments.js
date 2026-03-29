@@ -1,22 +1,13 @@
 const express = require('express')
-const path = require('path')
 const multer = require('multer')
+const { Readable } = require('stream')
+const cloudinary = require('../cloudinary')
 const Enrollment = require('../models/Enrollment')
 
 const router = express.Router()
 
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, path.join(__dirname, '../uploads'))
-  },
-  filename: (req, file, cb) => {
-    const ext = path.extname(file.originalname).toLowerCase()
-    cb(null, `receipt_${Date.now()}${ext}`)
-  },
-})
-
 const upload = multer({
-  storage,
+  storage: multer.memoryStorage(),
   limits: { fileSize: 5 * 1024 * 1024 }, // 5MB
   fileFilter: (req, file, cb) => {
     const allowed = ['image/jpeg', 'image/png', 'image/webp', 'application/pdf']
@@ -28,12 +19,38 @@ const upload = multer({
   },
 })
 
+const uploadToCloudinary = (buffer, options) =>
+  new Promise((resolve, reject) => {
+    const stream = cloudinary.uploader.upload_stream(options, (error, result) => {
+      if (error) return reject(error)
+      resolve(result)
+    })
+    Readable.from(buffer).pipe(stream)
+  })
+
 router.post('/', upload.single('paymentReceipt'), async (req, res) => {
   try {
     const { fullName, email, phone, whatsappNumber, ageRange, gender, hearAbout, selectedCourse } = req.body
 
     if (!fullName || !email || !phone || !selectedCourse) {
       return res.status(400).json({ success: false, error: 'Missing required fields' })
+    }
+
+    let receiptData = {}
+    if (req.file) {
+      const resourceType = req.file.mimetype === 'application/pdf' ? 'raw' : 'image'
+      const result = await uploadToCloudinary(req.file.buffer, {
+        folder: 'tbmi/payment-receipts',
+        resource_type: resourceType,
+        public_id: `receipt_${Date.now()}`,
+      })
+      receiptData = {
+        paymentReceiptFileName: req.file.originalname,
+        paymentReceiptSize: req.file.size,
+        paymentReceiptType: req.file.mimetype,
+        paymentReceiptUrl: result.secure_url,
+        paymentReceiptPublicId: result.public_id,
+      }
     }
 
     const enrollment = await Enrollment.create({
@@ -43,10 +60,7 @@ router.post('/', upload.single('paymentReceipt'), async (req, res) => {
       gender: gender || undefined,
       hearAbout: hearAbout || undefined,
       selectedCourse,
-      paymentReceiptFileName: req.file ? req.file.originalname : undefined,
-      paymentReceiptSize: req.file ? req.file.size : undefined,
-      paymentReceiptType: req.file ? req.file.mimetype : undefined,
-      paymentReceiptPath: req.file ? req.file.filename : undefined,
+      ...receiptData,
     })
 
     res.json({ success: true, id: enrollment._id })
