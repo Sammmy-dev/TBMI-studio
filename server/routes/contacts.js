@@ -3,6 +3,16 @@ const Contact = require('../models/Contact')
 
 const router = express.Router()
 
+router.get('/', async (req, res) => {
+  try {
+    const contacts = await Contact.find().sort({ createdAt: -1 }).lean()
+    res.json({ success: true, items: contacts })
+  } catch (error) {
+    console.error('Error fetching contacts:', error)
+    res.status(500).json({ success: false, error: 'Failed to fetch contact requests' })
+  }
+})
+
 router.post('/', async (req, res) => {
   try {
     const { fullName, email, phone, serviceType, message } = req.body

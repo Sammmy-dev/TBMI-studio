@@ -6,6 +6,16 @@ const Enrollment = require('../models/Enrollment')
 
 const router = express.Router()
 
+router.get('/', async (req, res) => {
+  try {
+    const enrollments = await Enrollment.find().sort({ createdAt: -1 }).lean()
+    res.json({ success: true, items: enrollments })
+  } catch (error) {
+    console.error('Error fetching enrollments:', error)
+    res.status(500).json({ success: false, error: 'Failed to fetch enrollments' })
+  }
+})
+
 const upload = multer({
   storage: multer.memoryStorage(),
   limits: { fileSize: 5 * 1024 * 1024 }, // 5MB
