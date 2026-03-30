@@ -14,15 +14,22 @@ export default function Contact() {
     message: '',
   })
   const [submitted, setSubmitted] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitError, setSubmitError] = useState('')
 
   const handleChange = (e) => {
     const { name, value } = e.target
+    setSubmitError('')
     setFormData((prev) => ({ ...prev, [name]: value }))
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    setIsSubmitting(true)
+    setSubmitError('')
+
     const result = await saveQuoteRequest(formData)
+
     if (result.success) {
       setSubmitted(true)
       setTimeout(() => {
@@ -36,9 +43,11 @@ export default function Contact() {
         setSubmitted(false)
       }, 3000)
     } else {
-      alert('Error submitting form. Please try again.')
       console.error(result.error)
+      setSubmitError(result.error || 'Error submitting form. Please try again.')
     }
+
+    setIsSubmitting(false)
   }
 
   const containerVariants = {
@@ -388,15 +397,25 @@ export default function Contact() {
                         />
                       </motion.div>
 
+                      {submitError && (
+                        <motion.p
+                          className="text-sm text-red-400"
+                          variants={itemVariants}
+                        >
+                          {submitError}
+                        </motion.p>
+                      )}
+
                       {/* Submit Button */}
                       <motion.button
                         type="submit"
-                        className="w-full py-4 bg-gradient-to-r from-primary to-accent hover:opacity-90 text-white font-display text-lg uppercase tracking-[0.2em] transition-all flex items-center justify-center gap-2"
+                        className="w-full py-4 bg-gradient-to-r from-primary to-accent hover:opacity-90 disabled:opacity-60 disabled:cursor-not-allowed text-white font-display text-lg uppercase tracking-[0.2em] transition-all flex items-center justify-center gap-2"
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
                         variants={itemVariants}
+                        disabled={isSubmitting}
                       >
-                        Send Quote Request
+                        {isSubmitting ? 'Sending...' : 'Send Quote Request'}
                         <FaEnvelope size={20} />
                       </motion.button>
                     </motion.div>

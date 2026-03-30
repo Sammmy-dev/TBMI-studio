@@ -17,18 +17,25 @@ export default function EnrollForm() {
   })
   const [submitted, setSubmitted] = useState(false)
   const [imagePreview, setImagePreview] = useState(null)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitError, setSubmitError] = useState('')
 
   const handleChange = (e) => {
     const { name, value, type, files } = e.target
+    setSubmitError('')
+
     if (type === 'file') {
-      setFormData((prev) => ({ ...prev, [name]: files[0] }))
-      // Create image preview
-      if (files[0]) {
+      const file = files[0] || null
+      setFormData((prev) => ({ ...prev, [name]: file }))
+
+      if (file && file.type.startsWith('image/')) {
         const reader = new FileReader()
         reader.onloadend = () => {
           setImagePreview(reader.result)
         }
-        reader.readAsDataURL(files[0])
+        reader.readAsDataURL(file)
+      } else {
+        setImagePreview(null)
       }
     } else {
       setFormData((prev) => ({ ...prev, [name]: value }))
@@ -42,13 +49,19 @@ export default function EnrollForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    setIsSubmitting(true)
+    setSubmitError('')
+
     const result = await saveEnrollment(formData)
+
     if (result.success) {
       setSubmitted(true)
     } else {
-      alert('Error submitting form. Please try again.')
       console.error(result.error)
+      setSubmitError(result.error || 'Error submitting form. Please try again.')
     }
+
+    setIsSubmitting(false)
   }
 
   const containerVariants = {
@@ -349,7 +362,7 @@ export default function EnrollForm() {
             {/* Payment Receipt Upload */}
             <motion.div className="flex flex-col gap-2" variants={itemVariants}>
               <label className="text-xs uppercase font-bold text-slate-500 tracking-widest">
-                Payment Receipt (Image Only)
+                Payment Receipt
               </label>
               {imagePreview ? (
                 <motion.div
@@ -387,7 +400,7 @@ export default function EnrollForm() {
                     type="file"
                     name="paymentReceipt"
                     onChange={handleChange}
-                    accept="image/*"
+                    accept="image/*,.pdf"
                     required
                     className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
                   />
@@ -395,25 +408,41 @@ export default function EnrollForm() {
                     <p className="text-slate-400 text-sm font-light">
                       Drag and drop your payment receipt or <span className="text-primary">click to upload</span>
                       <br />
-                      <span className="text-xs text-slate-500">(JPG, PNG max 5MB)</span>
+                      <span className="text-xs text-slate-500">(JPG, PNG, WebP, PDF max 5MB)</span>
                     </p>
+                    {formData.paymentReceipt && !imagePreview && (
+                      <p className="text-xs text-slate-400 mt-3">
+                        Selected file: {formData.paymentReceipt.name}
+                      </p>
+                    )}
                   </div>
                 </motion.div>
               )}
             </motion.div>
+
+            {submitError && (
+              <motion.p
+                className="text-sm text-red-400"
+                initial={{ opacity: 0, y: 6 }}
+                animate={{ opacity: 1, y: 0 }}
+              >
+                {submitError}
+              </motion.p>
+            )}
           </motion.div>
 
           {/* Submit Button */}
           <motion.button
             type="submit"
-            className="w-full py-4 bg-gradient-to-r from-primary to-accent hover:opacity-90 text-white font-display text-xl uppercase tracking-[0.2em] transition-all flex items-center justify-center gap-2"
+            className="w-full py-4 bg-gradient-to-r from-primary to-accent hover:opacity-90 disabled:opacity-60 disabled:cursor-not-allowed text-white font-display text-xl uppercase tracking-[0.2em] transition-all flex items-center justify-center gap-2"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.4 }}
+            disabled={isSubmitting}
           >
-            Submit Application
+            {isSubmitting ? 'Submitting...' : 'Submit Application'}
             <CheckCircle size={20} />
           </motion.button>
         </form>

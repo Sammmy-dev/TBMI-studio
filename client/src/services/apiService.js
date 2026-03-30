@@ -1,39 +1,61 @@
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001'
+const API_URL = import.meta.env.VITE_API_URL || '/api'
+
+const parseResponse = async (response) => {
+  const contentType = response.headers.get('content-type') || ''
+  const payload = contentType.includes('application/json')
+    ? await response.json()
+    : { success: false, error: 'Unexpected server response' }
+
+  if (!response.ok) {
+    return {
+      success: false,
+      error: payload.error || 'Request failed',
+    }
+  }
+
+  return payload
+}
+
+const post = async (path, options) => {
+  try {
+    const response = await fetch(`${API_URL}${path}`, options)
+    return await parseResponse(response)
+  } catch (error) {
+    console.error(`Error calling ${path}:`, error)
+    return {
+      success: false,
+      error: 'Unable to reach the server. Please try again.',
+    }
+  }
+}
 
 export const saveEnrollment = async (formData) => {
-  try {
-    const data = new FormData()
-    const fields = ['fullName', 'email', 'phone', 'whatsappNumber', 'ageRange', 'gender', 'hearAbout', 'selectedCourse']
-    fields.forEach((key) => {
-      if (formData[key] != null) data.append(key, formData[key])
-    })
-    if (formData.paymentReceipt) {
-      data.append('paymentReceipt', formData.paymentReceipt)
+  const data = new FormData()
+  const fields = ['fullName', 'email', 'phone', 'whatsappNumber', 'ageRange', 'gender', 'hearAbout', 'selectedCourse']
+
+  fields.forEach((key) => {
+    if (formData[key] != null) {
+      data.append(key, formData[key])
     }
+  })
 
-    const res = await fetch(`${API_URL}/api/enrollments`, {
-      method: 'POST',
-      body: data,
-    })
-
-    return await res.json()
-  } catch (error) {
-    console.error('Error saving enrollment:', error)
-    return { success: false, error: error.message }
+  if (formData.paymentReceipt) {
+    data.append('paymentReceipt', formData.paymentReceipt)
   }
+
+  return post('/enrollments', {
+    method: 'POST',
+    body: data,
+  })
 }
 
-export const saveQuoteRequest = async (formData) => {
-  try {
-    const res = await fetch(`${API_URL}/api/contacts`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(formData),
-    })
+export const saveQuoteRequest = async (formData) =>
+  post('/contacts', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(formData),
+  })
 
-    return await res.json()
-  } catch (error) {
-    console.error('Error saving contact:', error)
-    return { success: false, error: error.message }
-  }
-}
+export const getEnrollments = async () => post('/enrollments', { method: 'GET' })
+
+export const getQuoteRequests = async () => post('/contacts', { method: 'GET' })
