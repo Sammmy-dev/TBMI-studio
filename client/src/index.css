@@ -27,3 +27,59 @@ body {
 .text-glow {
   text-shadow: 0 0 15px rgba(191, 58, 43, 0.4);
 }
+
+.hero-marquee {
+  position: relative;
+  overflow: hidden;
+  mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
+}
+
+.hero-marquee-track {
+  display: flex;
+  width: max-content;
+  animation: hero-marquee 30s linear infinite;
+  will-change: transform;
+}
+
+.hero-marquee-content {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: clamp(2.5rem, 6vw, 5rem);
+  min-width: max-content;
+  padding-right: clamp(2.5rem, 6vw, 5rem);
+}
+
+.hero-marquee-item {
+  font-size: clamp(0.875rem, 2vw, 1.5rem);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.24em;
+  white-space: nowrap;
+}
+
+@keyframes hero-marquee {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@media (max-width: 640px) {
+  .hero-marquee-track {
+    animation-duration: 22s;
+  }
+
+  .hero-marquee {
+    mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+  }
+
+  .hero-marquee-item {
+    letter-spacing: 0.18em;
+  }
+}

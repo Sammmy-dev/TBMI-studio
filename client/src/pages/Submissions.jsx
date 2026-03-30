@@ -150,7 +150,7 @@ export default function Submissions() {
 
                         <div className="mt-4 border border-white/5 bg-background-dark/40 p-4">
                           <p className="text-xs uppercase tracking-[0.18em] text-slate-500">Project Details</p>
-                          <p className="mt-3 whitespace-pre-wrap leading-relaxed text-slate-300">{item.message || 'No details provided.'}</p>
+                          <p className="mt-3 whitespace-pre-wrap break-words break-all leading-relaxed text-slate-300">{item.message || 'No details provided.'}</p>
                         </div>
                       </article>
                     ))

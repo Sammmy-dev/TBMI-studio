@@ -1,6 +1,19 @@
 import { motion } from 'framer-motion'
 
 export default function Hero() {
+  const services = [
+    'Video Editing Training',
+    'Photography Training',
+    'Film Making',
+    'Content Creation',
+    'Podcasting',
+    'Social Media Management',
+    'Content Studio Setup',
+    'Media Coverage',
+    'Video Editing',
+    'Photography',
+  ]
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -73,42 +86,23 @@ export default function Hero() {
         </motion.div>
       </motion.div>
       <motion.div
-        className="absolute bottom-0 left-0 w-full overflow-hidden py-10 border-t border-white/5 bg-background-dark/50"
+        className="absolute bottom-0 left-0 w-full overflow-hidden border-t border-white/5 bg-background-dark/50 py-6 md:py-10"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.3 }}
       >
-        <div className="flex whitespace-nowrap gap-20 animate-marquee items-center opacity-30">
-          <span className="text-2xl font-bold uppercase tracking-widest">
-            Video Editing Training
-          </span>
-          <span className="text-2xl font-bold uppercase tracking-widest">
-            Photography Training
-          </span>
-          <span className="text-2xl font-bold uppercase tracking-widest">
-            Film Making
-          </span>
-          <span className="text-2xl font-bold uppercase tracking-widest">
-            Content Creation
-          </span>
-          <span className="text-2xl font-bold uppercase tracking-widest">
-            Podcasting
-          </span>
-          <span className="text-2xl font-bold uppercase tracking-widest">
-            Social Media Management
-          </span>
-          <span className="text-2xl font-bold uppercase tracking-widest">
-            Content Studio Setup
-          </span>
-          <span className="text-2xl font-bold uppercase tracking-widest">
-            Media Coverage
-          </span>
-          <span className="text-2xl font-bold uppercase tracking-widest">
-            Video Editing
-          </span>
-          <span className="text-2xl font-bold uppercase tracking-widest">
-            Photography
-          </span>
+        <div className="hero-marquee">
+          <div className="hero-marquee-track opacity-30">
+            {[0, 1].map((groupIndex) => (
+              <div key={groupIndex} className="hero-marquee-content" aria-hidden={groupIndex === 1}>
+                {services.map((service) => (
+                  <span key={`${groupIndex}-${service}`} className="hero-marquee-item">
+                    {service}
+                  </span>
+                ))}
+              </div>
+            ))}
+          </div>
         </div>
       </motion.div>
     </section>
