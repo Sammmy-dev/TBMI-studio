@@ -254,7 +254,6 @@ pnpm build
 ## Future Enhancements
 
 - [ ] Email notifications on form submission
-- [ ] Admin dashboard for submission review
 - [ ] Payment integration for services
 - [ ] Blog/Resources section
 - [ ] Video testimonials

@@ -55,7 +55,7 @@ export default function Hero() {
       >
         <motion.h1
           variants={itemVariants}
-          className="text-5xl md:text-8xl font-bold leading-none tracking-tighter uppercase mb-6 text-glow"
+          className="text-5xl md:text-8xl font-bold leading-none tracking-tighter uppercase mb-6 text-white text-glow"
         >
           Create. Produce.
           <br />

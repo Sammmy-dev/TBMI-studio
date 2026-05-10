@@ -35,7 +35,7 @@ export default function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.1}}
             whileHover={{ color: '#bf3a2b' }}
-            className="text-sm font-medium uppercase tracking-widest hover:text-primary transition-colors cursor-pointer"
+            className="text-sm font-medium uppercase tracking-widest text-white hover:text-primary transition-colors cursor-pointer"
             onClick={() => window.location.href = '/'}
           >
             Home
@@ -45,7 +45,7 @@ export default function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.1}}
             whileHover={{ color: '#bf3a2b'}}
-            className="text-sm font-medium uppercase tracking-widest hover:text-primary transition-colors cursor-pointer"
+            className="text-sm font-medium uppercase tracking-widest text-white hover:text-primary transition-colors cursor-pointer"
             onClick={() => window.location.href = '/services'}
           >
             Services
@@ -55,7 +55,7 @@ export default function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.1}}
             whileHover={{ color: '#bf3a2b'}}
-            className="text-sm font-medium uppercase tracking-widest hover:text-primary transition-colors cursor-pointer"
+            className="text-sm font-medium uppercase tracking-widest text-white hover:text-primary transition-colors cursor-pointer"
             onClick={() => window.location.href = '/gallery'}
           >
             Gallery
@@ -65,7 +65,7 @@ export default function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.1}}
             whileHover={{ color: '#bf3a2b' }}
-            className="text-sm font-medium uppercase tracking-widest hover:text-primary transition-colors cursor-pointer"
+            className="text-sm font-medium uppercase tracking-widest text-white hover:text-primary transition-colors cursor-pointer"
             onClick={() => window.location.href = '/about'}
           >
             About
@@ -75,7 +75,7 @@ export default function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.1 }}
             whileHover={{ color: '#bf3a2b' }}
-            className="text-sm font-medium uppercase tracking-widest hover:text-primary transition-colors cursor-pointer"
+            className="text-sm font-medium uppercase tracking-widest text-white hover:text-primary transition-colors cursor-pointer"
             onClick={() => window.location.href = '/contact'}
           >
             Contact
@@ -117,7 +117,7 @@ export default function Navbar() {
             initial={{ opacity: 0, x: -10 }}
             animate={{ opacity: isOpen ? 1 : 0, x: isOpen ? 0 : -10 }}
             transition={{ duration: 0.2, delay: 0.05 }}
-            className="block text-sm font-medium uppercase tracking-widest hover:text-primary transition-colors cursor-pointer py-2"
+            className="block text-sm font-medium uppercase tracking-widest text-white hover:text-primary transition-colors cursor-pointer py-2"
             onClick={() => {
               window.location.href = '/'
               closeMenu()
@@ -129,7 +129,7 @@ export default function Navbar() {
             initial={{ opacity: 0, x: -10 }}
             animate={{ opacity: isOpen ? 1 : 0, x: isOpen ? 0 : -10 }}
             transition={{ duration: 0.2, delay: 0.1 }}
-            className="block text-sm font-medium uppercase tracking-widest hover:text-primary transition-colors cursor-pointer py-2"
+            className="block text-sm font-medium uppercase tracking-widest text-white hover:text-primary transition-colors cursor-pointer py-2"
             onClick={() => {
               window.location.href = '/services'
               closeMenu()
@@ -141,7 +141,7 @@ export default function Navbar() {
             initial={{ opacity: 0, x: -10 }}
             animate={{ opacity: isOpen ? 1 : 0, x: isOpen ? 0 : -10 }}
             transition={{ duration: 0.2, delay: 0.15 }}
-            className="block text-sm font-medium uppercase tracking-widest hover:text-primary transition-colors cursor-pointer py-2"
+            className="block text-sm font-medium uppercase tracking-widest text-white hover:text-primary transition-colors cursor-pointer py-2"
             onClick={() => {
               window.location.href = '/gallery'
               closeMenu()
@@ -153,7 +153,7 @@ export default function Navbar() {
             initial={{ opacity: 0, x: -10 }}
             animate={{ opacity: isOpen ? 1 : 0, x: isOpen ? 0 : -10 }}
             transition={{ duration: 0.2, delay: 0.2 }}
-            className="block text-sm font-medium uppercase tracking-widest hover:text-primary transition-colors cursor-pointer py-2"
+            className="block text-sm font-medium uppercase tracking-widest text-white hover:text-primary transition-colors cursor-pointer py-2"
             onClick={() => {
               window.location.href = '/about'
               closeMenu()
@@ -165,7 +165,7 @@ export default function Navbar() {
             initial={{ opacity: 0, x: -10 }}
             animate={{ opacity: isOpen ? 1 : 0, x: isOpen ? 0 : -10 }}
             transition={{ duration: 0.2, delay: 0.25 }}
-            className="block text-sm font-medium uppercase tracking-widest hover:text-primary transition-colors cursor-pointer py-2"
+            className="block text-sm font-medium uppercase tracking-widest text-white hover:text-primary transition-colors cursor-pointer py-2"
             onClick={() => {
               window.location.href = '/contact'
               closeMenu()
