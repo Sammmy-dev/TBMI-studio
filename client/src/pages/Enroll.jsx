@@ -7,7 +7,7 @@ import HelpStrip from '../components/HelpStrip'
 
 export default function Enroll() {
   return (
-    <div className="dark bg-background-dark dark:text-slate-100">
+    <div className="bg-background-dark text-slate-100">
       {/* Film Grain Overlay */}
       <div
         className="film-grain fixed top-0 left-0 w-full h-full pointer-events-none z-50 opacity-[0.03]"

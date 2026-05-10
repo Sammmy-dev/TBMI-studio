@@ -178,7 +178,7 @@ export default function Services() {
   ]
 
   return (
-    <div className="dark bg-background-dark dark:text-slate-100">
+    <div className="bg-background-dark text-slate-100">
       <Navbar />
 
       <main>

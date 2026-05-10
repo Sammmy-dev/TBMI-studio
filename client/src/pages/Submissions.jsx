@@ -53,7 +53,7 @@ export default function Submissions() {
   const activeItems = activeTab === 'quotes' ? quotes : enrollments
 
   return (
-    <div className="dark min-h-screen bg-background-dark text-slate-100">
+    <div className="min-h-screen bg-background-dark text-slate-100">
       <Navbar />
 
       <main className="relative z-10">
