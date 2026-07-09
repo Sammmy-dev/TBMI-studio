@@ -7,6 +7,7 @@ import Gallery from './pages/Gallery'
 import Services from './pages/Services'
 import Contact from './pages/Contact'
 import Submissions from './pages/Submissions'
+import BusinessAd from './pages/BusinessAd'
 
 export default function App() {
   return (
@@ -19,6 +20,7 @@ export default function App() {
         <Route path="/enroll" element={<Enroll />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/submissions" element={<Submissions />} />
+        <Route path="/business-ad" element={<BusinessAd />} />
       </Routes>
       <Analytics />
     </Router>

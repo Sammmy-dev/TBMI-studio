@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
-import { FileText, GraduationCap, ExternalLink, RefreshCw } from 'lucide-react'
+import { FileText, GraduationCap, ExternalLink, RefreshCw, Megaphone } from 'lucide-react'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
-import { getEnrollments, getQuoteRequests } from '../services/apiService'
+import { getEnrollments, getQuoteRequests, getBusinessAds } from '../services/apiService'
 
 const tabs = [
   { id: 'quotes', label: 'Quote Requests', icon: FileText },
   { id: 'enrollments', label: 'Enrollments', icon: GraduationCap },
+  { id: 'businessAds', label: 'Business Ads', icon: Megaphone },
 ]
 
 const formatDate = (value) => {
@@ -23,6 +24,7 @@ export default function Submissions() {
   const [activeTab, setActiveTab] = useState('quotes')
   const [quotes, setQuotes] = useState([])
   const [enrollments, setEnrollments] = useState([])
+  const [businessAds, setBusinessAds] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState('')
 
@@ -30,19 +32,21 @@ export default function Submissions() {
     setIsLoading(true)
     setError('')
 
-    const [quotesResult, enrollmentsResult] = await Promise.all([
+    const [quotesResult, enrollmentsResult, businessAdsResult] = await Promise.all([
       getQuoteRequests(),
       getEnrollments(),
+      getBusinessAds(),
     ])
 
-    if (!quotesResult.success || !enrollmentsResult.success) {
-      setError(quotesResult.error || enrollmentsResult.error || 'Failed to load submissions.')
+    if (!quotesResult.success || !enrollmentsResult.success || !businessAdsResult.success) {
+      setError(quotesResult.error || enrollmentsResult.error || businessAdsResult.error || 'Failed to load submissions.')
       setIsLoading(false)
       return
     }
 
     setQuotes(quotesResult.items || [])
     setEnrollments(enrollmentsResult.items || [])
+    setBusinessAds(businessAdsResult.items || [])
     setIsLoading(false)
   }
 
@@ -50,7 +54,7 @@ export default function Submissions() {
     loadSubmissions()
   }, [])
 
-  const activeItems = activeTab === 'quotes' ? quotes : enrollments
+  const activeItems = activeTab === 'quotes' ? quotes : activeTab === 'enrollments' ? enrollments : businessAds
 
   return (
     <div className="min-h-screen bg-background-dark text-slate-100">
@@ -60,7 +64,7 @@ export default function Submissions() {
         <section className="border-b border-white/10 bg-[radial-gradient(circle_at_top,rgba(191,58,43,0.22),transparent_45%)]">
           <div className="max-w-7xl mx-auto px-6 py-6 md:py-8">
             <motion.div
-              className="grid gap-4 md:grid-cols-3"
+              className="grid gap-4 md:grid-cols-4"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 }}
@@ -72,6 +76,10 @@ export default function Submissions() {
               <div className="border border-white/10 bg-white/5 p-5 backdrop-blur-sm">
                 <p className="text-xs uppercase tracking-[0.25em] text-slate-500">Total Enrollments</p>
                 <p className="mt-3 text-4xl font-bold text-white">{enrollments.length}</p>
+              </div>
+              <div className="border border-white/10 bg-white/5 p-5 backdrop-blur-sm">
+                <p className="text-xs uppercase tracking-[0.25em] text-slate-500">Total Business Ads</p>
+                <p className="mt-3 text-4xl font-bold text-white">{businessAds.length}</p>
               </div>
               <button
                 type="button"
@@ -119,7 +127,7 @@ export default function Submissions() {
               </div>
             ) : activeItems.length === 0 ? (
               <div className="border border-white/10 bg-surface p-8 text-slate-400">
-                No {activeTab === 'quotes' ? 'quote requests' : 'enrollments'} found yet.
+                No {activeTab === 'quotes' ? 'quote requests' : activeTab === 'enrollments' ? 'enrollments' : 'business ads'} found yet.
               </div>
             ) : (
               <div className="grid gap-5">
@@ -154,65 +162,127 @@ export default function Submissions() {
                         </div>
                       </article>
                     ))
-                  : enrollments.map((item) => (
-                      <article key={item._id} className="border border-white/10 bg-surface p-6 shadow-2xl">
-                        <div className="flex flex-col gap-5 md:flex-row md:items-start md:justify-between">
-                          <div>
-                            <p className="text-xs uppercase tracking-[0.2em] text-primary">Enrollment</p>
-                            <h2 className="mt-2 text-2xl font-bold text-white">{item.fullName}</h2>
-                            <p className="mt-1 text-sm text-slate-500">Submitted {formatDate(item.createdAt)}</p>
+                  : activeTab === 'enrollments'
+                    ? enrollments.map((item) => (
+                        <article key={item._id} className="border border-white/10 bg-surface p-6 shadow-2xl">
+                          <div className="flex flex-col gap-5 md:flex-row md:items-start md:justify-between">
+                            <div>
+                              <p className="text-xs uppercase tracking-[0.2em] text-primary">Enrollment</p>
+                              <h2 className="mt-2 text-2xl font-bold text-white">{item.fullName}</h2>
+                              <p className="mt-1 text-sm text-slate-500">Submitted {formatDate(item.createdAt)}</p>
+                            </div>
+                            <span className="inline-flex w-fit border border-white/10 px-3 py-2 text-xs uppercase tracking-[0.18em] text-slate-300">
+                              {item.selectedCourse}
+                            </span>
                           </div>
-                          <span className="inline-flex w-fit border border-white/10 px-3 py-2 text-xs uppercase tracking-[0.18em] text-slate-300">
-                            {item.selectedCourse}
-                          </span>
-                        </div>
 
-                        <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-                          <div className="border border-white/5 bg-background-dark/40 p-4">
-                            <p className="text-xs uppercase tracking-[0.18em] text-slate-500">Email</p>
-                            <p className="mt-2 break-all text-slate-200">{item.email}</p>
+                          <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+                            <div className="border border-white/5 bg-background-dark/40 p-4">
+                              <p className="text-xs uppercase tracking-[0.18em] text-slate-500">Email</p>
+                              <p className="mt-2 break-all text-slate-200">{item.email}</p>
+                            </div>
+                            <div className="border border-white/5 bg-background-dark/40 p-4">
+                              <p className="text-xs uppercase tracking-[0.18em] text-slate-500">Phone</p>
+                              <p className="mt-2 text-slate-200">+234 {item.phone}</p>
+                            </div>
+                            <div className="border border-white/5 bg-background-dark/40 p-4">
+                              <p className="text-xs uppercase tracking-[0.18em] text-slate-500">WhatsApp</p>
+                              <p className="mt-2 text-slate-200">+234 {item.whatsappNumber || 'N/A'}</p>
+                            </div>
+                            <div className="border border-white/5 bg-background-dark/40 p-4">
+                              <p className="text-xs uppercase tracking-[0.18em] text-slate-500">Age Range</p>
+                              <p className="mt-2 text-slate-200">{item.ageRange || 'N/A'}</p>
+                            </div>
+                            <div className="border border-white/5 bg-background-dark/40 p-4">
+                              <p className="text-xs uppercase tracking-[0.18em] text-slate-500">Gender</p>
+                              <p className="mt-2 text-slate-200">{item.gender || 'N/A'}</p>
+                            </div>
+                            <div className="border border-white/5 bg-background-dark/40 p-4">
+                              <p className="text-xs uppercase tracking-[0.18em] text-slate-500">Heard About Us Via</p>
+                              <p className="mt-2 text-slate-200">{item.hearAbout || 'N/A'}</p>
+                            </div>
                           </div>
-                          <div className="border border-white/5 bg-background-dark/40 p-4">
-                            <p className="text-xs uppercase tracking-[0.18em] text-slate-500">Phone</p>
-                            <p className="mt-2 text-slate-200">+234 {item.phone}</p>
-                          </div>
-                          <div className="border border-white/5 bg-background-dark/40 p-4">
-                            <p className="text-xs uppercase tracking-[0.18em] text-slate-500">WhatsApp</p>
-                            <p className="mt-2 text-slate-200">+234 {item.whatsappNumber || 'N/A'}</p>
-                          </div>
-                          <div className="border border-white/5 bg-background-dark/40 p-4">
-                            <p className="text-xs uppercase tracking-[0.18em] text-slate-500">Age Range</p>
-                            <p className="mt-2 text-slate-200">{item.ageRange || 'N/A'}</p>
-                          </div>
-                          <div className="border border-white/5 bg-background-dark/40 p-4">
-                            <p className="text-xs uppercase tracking-[0.18em] text-slate-500">Gender</p>
-                            <p className="mt-2 text-slate-200">{item.gender || 'N/A'}</p>
-                          </div>
-                          <div className="border border-white/5 bg-background-dark/40 p-4">
-                            <p className="text-xs uppercase tracking-[0.18em] text-slate-500">Heard About Us Via</p>
-                            <p className="mt-2 text-slate-200">{item.hearAbout || 'N/A'}</p>
-                          </div>
-                        </div>
 
-                        <div className="mt-4 flex flex-wrap items-center gap-4 border border-white/5 bg-background-dark/40 p-4">
-                          <div>
-                            <p className="text-xs uppercase tracking-[0.18em] text-slate-500">Receipt</p>
-                            <p className="mt-2 text-slate-200">{item.paymentReceiptFileName || 'No receipt uploaded'}</p>
+                          <div className="mt-4 flex flex-wrap items-center gap-4 border border-white/5 bg-background-dark/40 p-4">
+                            <div>
+                              <p className="text-xs uppercase tracking-[0.18em] text-slate-500">Receipt</p>
+                              <p className="mt-2 text-slate-200">{item.paymentReceiptFileName || 'No receipt uploaded'}</p>
+                            </div>
+                            {item.paymentReceiptUrl && (
+                              <a
+                                href={item.paymentReceiptUrl}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="inline-flex items-center gap-2 border border-primary/30 bg-primary/10 px-4 py-3 text-xs font-semibold uppercase tracking-[0.18em] text-primary transition hover:bg-primary/20"
+                              >
+                                Open Receipt
+                                <ExternalLink size={16} />
+                              </a>
+                            )}
                           </div>
-                          {item.paymentReceiptUrl && (
-                            <a
-                              href={item.paymentReceiptUrl}
-                              target="_blank"
-                              rel="noreferrer"
-                              className="inline-flex items-center gap-2 border border-primary/30 bg-primary/10 px-4 py-3 text-xs font-semibold uppercase tracking-[0.18em] text-primary transition hover:bg-primary/20"
-                            >
-                              Open Receipt
-                              <ExternalLink size={16} />
-                            </a>
-                          )}
-                        </div>
-                      </article>
-                    ))}
+                        </article>
+                      ))
+                    : businessAds.map((item) => (
+                        <article key={item._id} className="border border-white/10 bg-surface p-6 shadow-2xl">
+                          <div className="flex flex-col gap-5 md:flex-row md:items-start md:justify-between">
+                            <div>
+                              <p className="text-xs uppercase tracking-[0.2em] text-primary">Business Ad</p>
+                              <h2 className="mt-2 text-2xl font-bold text-white">{item.contactPerson}</h2>
+                              <p className="mt-1 text-sm text-slate-500">Submitted {formatDate(item.createdAt)}</p>
+                            </div>
+                            {item.businessName && (
+                              <span className="inline-flex w-fit border border-white/10 px-3 py-2 text-xs uppercase tracking-[0.18em] text-slate-300">
+                                {item.businessName}
+                              </span>
+                            )}
+                          </div>
+
+                          <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+                            <div className="border border-white/5 bg-background-dark/40 p-4">
+                              <p className="text-xs uppercase tracking-[0.18em] text-slate-500">Email</p>
+                              <p className="mt-2 break-all text-slate-200">{item.email}</p>
+                            </div>
+                            <div className="border border-white/5 bg-background-dark/40 p-4">
+                              <p className="text-xs uppercase tracking-[0.18em] text-slate-500">Phone</p>
+                              <p className="mt-2 text-slate-200">+234 {item.phone}</p>
+                            </div>
+                            <div className="border border-white/5 bg-background-dark/40 p-4">
+                              <p className="text-xs uppercase tracking-[0.18em] text-slate-500">Social Media</p>
+                              <p className="mt-2 text-slate-200">{item.socialMediaHandles}</p>
+                            </div>
+                            <div className="border border-white/5 bg-background-dark/40 p-4">
+                              <p className="text-xs uppercase tracking-[0.18em] text-slate-500">Business Name</p>
+                              <p className="mt-2 text-slate-200">{item.businessName || 'N/A'}</p>
+                            </div>
+                            <div className="border border-white/5 bg-background-dark/40 p-4">
+                              <p className="text-xs uppercase tracking-[0.18em] text-slate-500">Website</p>
+                              <p className="mt-2 break-all text-slate-200">{item.website || 'N/A'}</p>
+                            </div>
+                            <div className="border border-white/5 bg-background-dark/40 p-4">
+                              <p className="text-xs uppercase tracking-[0.18em] text-slate-500">Contact Person</p>
+                              <p className="mt-2 text-slate-200">{item.contactPerson}</p>
+                            </div>
+                          </div>
+
+                          <div className="mt-4 flex flex-wrap items-center gap-4 border border-white/5 bg-background-dark/40 p-4">
+                            <div>
+                              <p className="text-xs uppercase tracking-[0.18em] text-slate-500">Logo</p>
+                              <p className="mt-2 text-slate-200">{item.logoFileName || 'No logo uploaded'}</p>
+                            </div>
+                            {item.logoUrl && (
+                              <a
+                                href={item.logoUrl}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="inline-flex items-center gap-2 border border-primary/30 bg-primary/10 px-4 py-3 text-xs font-semibold uppercase tracking-[0.18em] text-primary transition hover:bg-primary/20"
+                              >
+                                Open Logo
+                                <ExternalLink size={16} />
+                              </a>
+                            )}
+                          </div>
+                        </article>
+                      ))}
               </div>
             )}
           </div>

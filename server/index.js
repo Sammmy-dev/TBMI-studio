@@ -6,6 +6,7 @@ const { connect } = require('./db')
 
 const enrollmentsRouter = require('./routes/enrollments')
 const contactsRouter = require('./routes/contacts')
+const businessAdsRouter = require('./routes/businessAds')
 
 const app = express()
 const PORT = process.env.PORT || 3001
@@ -30,6 +31,7 @@ app.use(express.urlencoded({ extended: true }))
 
 app.use('/api/enrollments', enrollmentsRouter)
 app.use('/api/contacts', contactsRouter)
+app.use('/api/business-ads', businessAdsRouter)
 
 app.get('/health', (req, res) => {
   res.json({ status: 'ok' })

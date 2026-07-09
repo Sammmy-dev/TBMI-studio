@@ -59,3 +59,25 @@ export const saveQuoteRequest = async (formData) =>
 export const getEnrollments = async () => post('/enrollments', { method: 'GET' })
 
 export const getQuoteRequests = async () => post('/contacts', { method: 'GET' })
+
+export const saveBusinessAd = async (formData) => {
+  const data = new FormData()
+  const fields = ['businessName', 'contactPerson', 'phone', 'email', 'socialMediaHandles', 'website']
+
+  fields.forEach((key) => {
+    if (formData[key] != null) {
+      data.append(key, formData[key])
+    }
+  })
+
+  if (formData.logo) {
+    data.append('logo', formData.logo)
+  }
+
+  return post('/business-ads', {
+    method: 'POST',
+    body: data,
+  })
+}
+
+export const getBusinessAds = async () => post('/business-ads', { method: 'GET' })
