@@ -24,7 +24,7 @@ function MissionCard({ icon: Icon, title, description }) {
   )
 }
 
-function TeamMember({ name, role, image }) {
+function TeamMember({ name, role, image, description }) {
   return (
     <motion.div
       className="text-center"
@@ -42,7 +42,8 @@ function TeamMember({ name, role, image }) {
         />
       </div>
       <h4 className="text-lg font-bold uppercase tracking-widest mb-1">{name}</h4>
-      <p className="text-primary text-sm uppercase font-semibold">{role}</p>
+      <p className="text-primary text-sm uppercase font-semibold mb-4">{role}</p>
+      <p className="text-slate-400 text-sm font-light leading-relaxed">{description}</p>
     </motion.div>
   )
 }
@@ -68,19 +69,16 @@ export default function About() {
 
   const team = [
     {
-      name: "Alex Morgan",
-      role: "Founder & Lead Instructor",
-      image: "https://lh3.googleusercontent.com/aida-public/AB6AXuAga1EXkMnNlXAaQQHeIskpVFe9QhoAH6EnAH4X0D3JUqvf1e7VsCXQX_BKsyKMsBaEKWaVWcuNso-IAtBv2Ytq-803P7Oduerz7uq4PEVGl7MmO0RAT6GUufPytLWi-ZmDRlDrtmscxJIp4-FC0vMRGkHZNS_2Ag9rzqWoyADWqU6xrHXMqPDHSX2tZLXVD43X9NHTREyBRzk9SSQqcUY1SkJFuLaRPKhrm4fFQBxKob4E9EI3bb7cth4GV2laq3r2ESh8DmW83XUd",
+      name: "Victor Ehis",
+      role: "Founder",
+      image: "/Victor-Ehis.jpeg",
+      description: "Visionary leader who founded TBMI Studios with a mission to democratize professional creative skills. Oversees strategy, curriculum development, and studio operations.",
     },
     {
-      name: "Jordan Hayes",
-      role: "DaVinci Specialist",
-      image: "https://lh3.googleusercontent.com/aida-public/AB6AXuAga1EXkMnNlXAaQQHeIskpVFe9QhoAH6EnAH4X0D3JUqvf1e7VsCXQX_BKsyKMsBaEKWaVWcuNso-IAtBv2Ytq-803P7Oduerz7uq4PEVGl7MmO0RAT6GUufPytLWi-ZmDRlDrtmscxJIp4-FC0vMRGkHZNS_2Ag9rzqWoyADWqU6xrHXMqPDHSX2tZLXVD43X9NHTREyBRzk9SSQqcUY1SkJFuLaRPKhrm4fFQBxKob4E9EI3bb7cth4GV2laq3r2ESh8DmW83XUd",
-    },
-    {
-      name: "Sam Pierce",
-      role: "Premiere Pro Expert",
-      image: "https://lh3.googleusercontent.com/aida-public/AB6AXuAga1EXkMnNlXAaQQHeIskpVFe9QhoAH6EnAH4X0D3JUqvf1e7VsCXQX_BKsyKMsBaEKWaVWcuNso-IAtBv2Ytq-803P7Oduerz7uq4PEVGl7MmO0RAT6GUufPytLWi-ZmDRlDrtmscxJIp4-FC0vMRGkHZNS_2Ag9rzqWoyADWqU6xrHXMqPDHSX2tZLXVD43X9NHTREyBRzk9SSQqcUY1SkJFuLaRPKhrm4fFQBxKob4E9EI3bb7cth4GV2laq3r2ESh8DmW83XUd",
+      name: "Sunday Ayobami",
+      role: "Head of Media",
+      image: "/Sunday-Ayobami.jpeg",
+      description: "Leads all media production including video editing, photography, filmmaking, and content creation. Ensures every project meets TBMI's professional standards.",
     },
   ]
 
@@ -245,7 +243,7 @@ export default function About() {
         </section>
 
         {/* Team Section */}
-        {/* <section className="py-32 bg-surface">
+        <section className="py-32 bg-surface">
           <div className="max-w-6xl mx-auto px-6">
             <motion.div
               className="mb-20 text-center"
@@ -260,18 +258,19 @@ export default function About() {
               <div className="w-20 h-1 bg-primary mx-auto"></div>
             </motion.div>
 
-            <div className="grid md:grid-cols-3 gap-16">
+            <div className="grid md:grid-cols-2 gap-16">
               {team.map((member, index) => (
                 <TeamMember
                   key={index}
                   name={member.name}
                   role={member.role}
                   image={member.image}
+                  description={member.description}
                 />
               ))}
             </div>
           </div>
-        </section> */}
+        </section>
 
         {/* CTA Section */}
         <section className="py-32 bg-gradient-to-r from-primary/10 to-primary/5 border-y border-primary/20">
