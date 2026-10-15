@@ -24,26 +24,30 @@ function MissionCard({ icon: Icon, title, description }) {
   )
 }
 
-function TeamMember({ name, role, image, description }) {
+function TeamMember({ name, role, image, description, title }) {
   return (
     <motion.div
-      className="text-center"
+      className="flex flex-col md:flex-row md:items-start gap-8 border border-primary/20 bg-card-dark p-8"
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
       viewport={{ once: true, margin: '-100px' }}
-      whileHover={{ scale: 1.05 }}
     >
-      <div className="w-40 h-40 mx-auto mb-6 rounded-full overflow-hidden border-2 border-primary/30 hover:border-primary transition-colors">
+      <div className="w-40 h-40 mx-auto md:mx-0 md:w-52 md:h-52 md:flex-shrink-0 rounded-full overflow-hidden border-2 border-primary/30">
         <img
           alt={name}
           className="w-full h-full object-cover"
           src={image}
         />
       </div>
-      <h4 className="text-lg font-bold uppercase tracking-widest mb-1">{name}</h4>
-      <p className="text-primary text-sm uppercase font-semibold mb-4">{role}</p>
-      <p className="text-slate-400 text-sm font-light leading-relaxed">{description}</p>
+      <div className="text-center md:text-left">
+        <p className="text-primary text-xs uppercase font-semibold tracking-widest mb-2">{role}</p>
+        <h3 className="text-2xl font-bold uppercase tracking-widest mb-2">{name}</h3>
+        {title && <p className="text-slate-300 font-medium mb-5">{title}</p>}
+        <div className="space-y-4 text-slate-400 text-sm font-light leading-relaxed">
+          {description.map((paragraph, index) => <p key={index}>{paragraph}</p>)}
+        </div>
+      </div>
     </motion.div>
   )
 }
@@ -70,15 +74,21 @@ export default function About() {
   const team = [
     {
       name: "Victor Ehis",
-      role: "Founder",
+      role: "Founder, CEO & Speaker",
       image: "/Victor-Ehis.jpeg",
-      description: "Visionary leader who founded TBMI Studios with a mission to democratize professional creative skills. Oversees strategy, curriculum development, and studio operations.",
+      title: "Media Strategist · Creative Professional · HR Entrepreneur",
+      description: [
+        "Victor Ehis is a distinguished media strategist, creative professional, and entrepreneur based in Osun State, Nigeria. As the founder and CEO of TBMi Studios, he leads a creative media organisation offering videography, photography, content creation, filmmaking, social media management, and other media solutions.",
+        "His journey began serving in his church’s media department, where he discovered a passion for producing quality visual content. A commitment to excellence led him to invest in cameras, lighting, and production equipment. That personal pursuit grew into the foundation of TBMi Studios.",
+        "Victor creates content to educate, enlighten, inspire, and strengthen faith, using media as a tool for communication, transformation, and positive influence. He is also a human resources professional and the founder of an HR consultancy, bringing a distinctive perspective on creativity, leadership, people management, and professional development.",
+        "Away from work, Victor is a devoted family man. He and his wife, whom he fondly calls his best friend, are blessed with two daughters.",
+      ],
     },
     {
       name: "Sunday Ayobami",
       role: "Head of Media",
       image: "/Sunday-Ayobami.jpeg",
-      description: "Leads all media production including video editing, photography, filmmaking, and content creation. Ensures every project meets TBMI's professional standards.",
+      description: ["Leads all media production including video editing, photography, filmmaking, and content creation. Ensures every project meets TBMI's professional standards."],
     },
   ]
 
@@ -258,13 +268,14 @@ export default function About() {
               <div className="w-20 h-1 bg-primary mx-auto"></div>
             </motion.div>
 
-            <div className="grid md:grid-cols-2 gap-16">
+            <div className="grid gap-8">
               {team.map((member, index) => (
                 <TeamMember
                   key={index}
                   name={member.name}
                   role={member.role}
                   image={member.image}
+                  title={member.title}
                   description={member.description}
                 />
               ))}
